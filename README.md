@@ -12,4 +12,4 @@ optional arguments:
 ```
 ## pca_dim.py
 Examing the result of PCA if it can be separable.
-![image]https://github.com/Chung-Yi/face_classifier/blob/master/pca_data/save_image/output_layer_64.png
+![image](https://github.com/Chung-Yi/face_classifier/blob/master/pca_data/save_image/output_layer_64.png)
