@@ -26,11 +26,15 @@ def imread(im_path, shape=None, mode=cv2.IMREAD_UNCHANGED):
 
 def imagelist(data_path, file_list):
     with open(file_list, 'a') as f:
+      if os.path.isdir(data_path):
         for filename in os.listdir(data_path):
             class_label = filename.split('_')[0]
             if filename != '.DS_Store':
                 f.write(filename + ' ' + class_label + '\n')
-            
+      elif os.path.isfile(data_path):
+          class_label = data_path.split('_')[0]
+          if data_path != '.DS_Store':
+              f.write(data_path + ' ' + class_label)
 
 
 def read_data(filename, data_path, shape=None):
@@ -47,7 +51,10 @@ def read_data(filename, data_path, shape=None):
     s, c = SHAPE, CHANNEL_LEN
     for ln in lines:
       fname, lab = ln.split(' ')
-      im = imread(os.path.join(data_path, fname), shape=s)
+      if fname == data_path:
+        im = imread(fname, shape=s)
+      else:
+        im = imread(os.path.join(data_path, fname), shape=s)
       data[idx,:c] =  np.reshape(im[:,:,0], c)
       data[idx, c:2*c] = np.reshape(im[:,:,1], c)
       data[idx, 2*c:] = np.reshape(im[:,:,2], c)
