@@ -1,5 +1,6 @@
 import face_image
 import numpy as np
+import timeit
 import os
 import _pickle as cPickle
 from keras.utils import np_utils
@@ -80,8 +81,8 @@ def main():
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     train_history = model.fit(x_train, y_train, validation_split=0.2, epochs=20, batch_size=200, verbose=2)
 
-    model.save('model/face_classifier.h5')
-    model.save_weights("model/face_classifier_weights.h5")
+    # model.save('model/face_classifier.h5')
+    # model.save_weights("model/face_classifier_weights.h5")
 
 
     
@@ -98,8 +99,15 @@ def main():
 
     loss, accuracy = model.evaluate(x_test, y_test)
     print('accuracy is %.4f'%(accuracy))
+    
 
+
+
+    start =timeit.default_timer()
     test_pred = model.predict_classes(x_test)
+    end = timeit.default_timer()
+    print('Time: ', end - start)
+
     predict_prop = model.predict(x_test)
 
     
